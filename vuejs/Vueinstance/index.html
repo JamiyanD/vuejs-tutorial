@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app1">
+        <h1 ref="myParagraph">{{title}}</h1>
+        <button @click="show" ref="myButton">Textiig haruulah</button>
+        <hr>
+        <p v-if="showText">Ene text shalgaj, tuunii daraa haragdana</p>
+    </div>
+    <div id="app2">
+        <h1>{{title}}</h1>
+        <button @click="onChange">Garchig 1 iin utgiig oorchloy</button>
+    </div>
+
+    <div id="app3">
+        <test></test>   
+    </div>
+
+
+   
+
+    <script>
+        var data ={ 
+                title:'Garchig 1',
+                showText:false
+            }
+        var vm1 = new Vue({
+            // el: '#app1',
+            data:data,
+            methods:{
+            show: function(){
+                this.showText = true;
+                this.updateTitle('Garchig shinechlev...');
+                // console.log(this.$refs)
+                this.$refs.myButton.innerText = "Tovchni textig oorchlov";
+            },
+            updateTitle: function(title){
+                this.title = title;
+            },
+            },
+            computed:{
+                lowercaseTitle: function(){
+                    return this.title.toLowerCase();
+                }
+            },
+            watch:{
+                title: function(value){
+                    alert('Garchig oorchlogdson, shine utga n: ' + value);
+                }
+            }
+        
+        })
+    vm1.$mount('#app1');
+
+        // setTimeout(function(){
+        //     vm1.title = 'Garchig 3'
+        // },2000);
+
+        var vm2 = new Vue({
+            el: '#app2',
+            data:{
+                title: 'Garchig 2'
+            },
+            methods:{
+                onChange: function(){
+                    vm1.title = this.title;
+                }
+            }
+        })
+
+        // var vm3 = new Vue({
+        //     el: `testT`,
+        //     template: `<h1>Sain bna uu vm3?</h1>`
+        // })
+        // vm3.$mount('#app3');
+
+        Vue.component('test', {
+            template : `<h1>Sain bna uu vm3?</h1>`
+        })
+
+     //  document.getElementById('app3').appendChild(vm3.$el);
+    </script>
+</body>
+</html>
